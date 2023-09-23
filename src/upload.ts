@@ -699,12 +699,14 @@ const publishComment = (comment: Comment) => {
                                     const comment = mutation.addedNodes[0]
 
                                     // Like comment
-                                    comment &&
-                                        (
-                                            (comment as HTMLElement).querySelector(
-                                                '#like-button button'
-                                            ) as HTMLButtonElement
-                                        )?.click()
+                                    const likeButton = document.evaluate(
+                                        "//*[@id='like-button']//button",
+                                        comment,
+                                        null,
+                                        XPathResult.FIRST_ORDERED_NODE_TYPE
+                                    ).singleNodeValue
+                                    likeButton && (likeButton as HTMLButtonElement).click()
+
                                     // Wait for like
                                     await new Promise((resolve) => setTimeout(resolve, 100))
 
