@@ -725,7 +725,7 @@ const publishComment = (comment: Comment) => {
 
                                     // Select pin button
                                     const pinButton = document.evaluate(
-                                        `.//tp-yt-paper-item//*[text()="Pin"]/ancestor::tp-yt-paper-item`,
+                                        `.//tp-yt-paper-item//*[text()="Pin" or text()="Anpinnen"]/ancestor::tp-yt-paper-item`,
                                         document,
                                         null,
                                         XPathResult.FIRST_ORDERED_NODE_TYPE
