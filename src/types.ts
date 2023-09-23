@@ -63,6 +63,7 @@ export interface Comment {
     live?: boolean
     onSuccess?: Function
     pin?: boolean
+    channelName?: string
 }
 
 export interface Credentials {

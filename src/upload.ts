@@ -626,6 +626,10 @@ const publishShortComment = async (comment: Comment) => {
     if (!videoUrl) {
         throw new Error('The link of the  video is a required parameter')
     }
+    if (comment.channelName) {
+        await changeChannel(comment.channelName)
+    }
+
     await page.goto(videoUrl)
     await sleep(3000)
     try {
@@ -650,6 +654,9 @@ const publishComment = (comment: Comment) => {
         throw new Error('The link of the  video is a required parameter')
     }
     return new Promise(async (resolve) => {
+        if (comment.channelName) {
+            await changeChannel(comment.channelName)
+        }
         try {
             const cmt = comment.comment
             await page.goto(videoUrl)
@@ -750,6 +757,10 @@ const publishLiveComment = async (comment: Comment, messageTransport: MessageTra
     if (!videoUrl) {
         throw new Error('The link of the  video is a required parameter')
     }
+    if (comment.channelName) {
+        await changeChannel(comment.channelName)
+    }
+
     await page.goto(videoUrl)
     await sleep(3000)
     await scrollTillVeiw(page, `#label`)
