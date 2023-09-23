@@ -428,6 +428,52 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
         } catch {}
     }
 
+    if (videoJSON.subtitlesPath) {
+        try {
+            await page.waitForSelector('#subtitles-button', { visible: true, timeout: 10000 })
+
+            await page.waitForTimeout(1500)
+
+            await page.click('#subtitles-button')
+
+            await page.waitForSelector('#choose-upload-file', { visible: true, timeout: 10000 })
+
+            await page.waitForTimeout(1500)
+
+            // choose without timing
+            await page.waitForSelector("tp-yt-paper-radio-button[name='without-timing']", {
+                visible: true,
+                timeout: 10000
+            })
+
+            await page.waitForTimeout(100)
+
+            await page.click("tp-yt-paper-radio-button[name='without-timing']")
+
+            // confirm
+            await page.waitForSelector('#confirm-button', { visible: true, timeout: 10000 })
+
+            const confirmBtn = await page.$('#confirm-button')
+
+            const [fileChooser] = await Promise.all([
+                page.waitForFileChooser(),
+                confirmBtn?.click() // button that triggers file selection
+            ])
+            await fileChooser.accept([videoJSON.subtitlesPath])
+
+            await page.waitForSelector('#publish-button', { visible: true, timeout: 10000 })
+
+            await page.waitForTimeout(1500)
+
+            await page.click('#publish-button')
+
+            await page.waitForTimeout(3500)
+        } catch (err) {
+            console.warn(err)
+            console.warn('Subtitles not working, skipping')
+        }
+    }
+
     // await sleep(2000)
     await page.waitForXPath(nextBtnXPath)
     // click next button
