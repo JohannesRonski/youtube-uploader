@@ -18,7 +18,8 @@ export interface Video {
     isChannelMonetized?: boolean
     subtitlesPath?: string
     gameTitleSearch?: string
-    gameSelector?: ( arg0: GameData ) => Promise<boolean> | null
+    gameSelector?: (arg0: GameData) => Promise<boolean> | null
+    like?: boolean
 }
 
 export interface MessageTransport {

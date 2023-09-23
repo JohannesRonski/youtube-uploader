@@ -532,16 +532,28 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
     // await page.waitForXPath('//*[contains(text(),"Finished processing")]', { timeout: 0})
 
     // no closeBtn will show up if keeps video as draft
-    if (uploadAsDraft) return uploadedLink
+    if (!uploadAsDraft) {
+        // Wait for closebtn to show up
+        try {
+            await page.waitForXPath(closeBtnXPath)
+        } catch (e) {
+            await browser.close()
+            throw new Error(
+                'Please make sure you set up your default video visibility correctly, you might have forgotten. More infos : https://github.com/fawazahmed0/youtube-uploader#youtube-setup'
+            )
+        }
+    }
 
-    // Wait for closebtn to show up
-    try {
-        await page.waitForXPath(closeBtnXPath)
-    } catch (e) {
-        await browser.close()
-        throw new Error(
-            'Please make sure you set up your default video visibility correctly, you might have forgotten. More infos : https://github.com/fawazahmed0/youtube-uploader#youtube-setup'
-        )
+    if (videoJSON.like) {
+        await page.goto(uploadedLink)
+
+        await page.waitForSelector('#segmented-like-button button', { visible: true, timeout: 10000 })
+
+        await page.waitForTimeout(1500)
+
+        await page.click('#segmented-like-button button')
+
+        await page.waitForTimeout(1500)
     }
 
     return uploadedLink
@@ -685,6 +697,16 @@ const publishComment = (comment: Comment) => {
                                 try {
                                     // Get the recently added comment node
                                     const comment = mutation.addedNodes[0]
+
+                                    // Like comment
+                                    comment &&
+                                        (
+                                            (comment as HTMLElement).querySelector(
+                                                '#like-button button'
+                                            ) as HTMLButtonElement
+                                        )?.click()
+                                    // Wait for like
+                                    await new Promise((resolve) => setTimeout(resolve, 100))
 
                                     // Finds three dot menu inside comment
                                     // Evaluate XPath relative to the added comment.
