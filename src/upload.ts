@@ -350,6 +350,9 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
         await selectGame(page, gameTitleSearch, videoJSON.gameSelector)
     }
 
+    // wait small amount of time to ensure everything is loaded
+    await page.waitForTimeout(1500)
+
     const nextBtnXPath = "//*[normalize-space(text())='Next']/parent::*[not(@disabled)]"
     let next
 
@@ -430,7 +433,9 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
     if (videoJSON.subtitlesPath) {
         try {
-            await page.waitForSelector('#subtitles-button', { visible: true, timeout: 10000 })
+            await page.waitForTimeout(60000)
+
+            await page.waitForSelector('#subtitles-button', { visible: true, timeout: 60000 })
 
             await page.waitForTimeout(1500)
 
