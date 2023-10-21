@@ -475,6 +475,8 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
             await page.click('#publish-button')
 
             await page.waitForTimeout(3500)
+
+            await page.waitForSelector('#next-button', { visible: true, timeout: 10000 })
         } catch (err) {
             console.warn(err)
             console.warn('Subtitles not working, skipping')
