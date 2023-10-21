@@ -445,6 +445,8 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
             await page.waitForTimeout(1500)
 
+            await page.click('#choose-upload-file')
+
             // choose without timing
             await page.waitForSelector("tp-yt-paper-radio-button[name='without-timing']", {
                 visible: true,
