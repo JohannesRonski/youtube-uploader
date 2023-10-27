@@ -433,7 +433,7 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
     if (videoJSON.subtitlesPath) {
         try {
-            await page.waitForTimeout(1500)
+            await page.waitForTimeout(3500)
 
             await page.waitForSelector('#subtitles-button', { visible: true, timeout: 120000 })
 
@@ -447,15 +447,15 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
             await page.click('#choose-upload-file')
 
-            await page.waitForTimeout(1500)
+            await page.waitForTimeout(3500)
 
             // choose without timing
-            await page.waitForSelector("tp-yt-paper-radio-button[name='without-timing']", {
+            await page.waitForSelector("tp-yt-paper-radio-button[name='without-timing']:not([disabled])", {
                 visible: true,
                 timeout: 10000
             })
 
-            await page.waitForTimeout(100)
+            await page.waitForTimeout(1500)
 
             await page.click("tp-yt-paper-radio-button[name='without-timing']")
 
