@@ -433,9 +433,9 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
     if (videoJSON.subtitlesPath) {
         try {
-            await page.waitForTimeout(60000)
+            await page.waitForTimeout(1500)
 
-            await page.waitForSelector('#subtitles-button', { visible: true, timeout: 60000 })
+            await page.waitForSelector('#subtitles-button', { visible: true, timeout: 120000 })
 
             await page.waitForTimeout(1500)
 
