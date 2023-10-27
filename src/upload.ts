@@ -447,6 +447,8 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
             await page.click('#choose-upload-file')
 
+            await page.waitForTimeout(1500)
+
             // choose without timing
             await page.waitForSelector("tp-yt-paper-radio-button[name='without-timing']", {
                 visible: true,
@@ -460,6 +462,8 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
             // confirm
             await page.waitForSelector('#confirm-button', { visible: true, timeout: 10000 })
 
+            await page.waitForTimeout(1000)
+
             const confirmBtn = await page.$('#confirm-button')
 
             const [fileChooser] = await Promise.all([
@@ -467,6 +471,8 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
                 confirmBtn?.click() // button that triggers file selection
             ])
             await fileChooser.accept([videoJSON.subtitlesPath])
+
+            await page.waitForTimeout(1000)
 
             await page.waitForSelector('#publish-button', { visible: true, timeout: 10000 })
 
