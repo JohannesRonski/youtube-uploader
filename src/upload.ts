@@ -532,7 +532,7 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
             await page.waitForTimeout(1000)
 
-            await page.waitForSelector('#publish-button', { visible: true, timeout: 10000 })
+            await page.waitForSelector('#publish-button:not([disabled]', { visible: true, timeout: 10000 })
 
             await page.waitForTimeout(1500)
 
@@ -540,7 +540,7 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
             await page.waitForTimeout(3500)
 
-            await page.waitForSelector('#next-button', { visible: true, timeout: 10000 })
+            await page.waitForXPath(nextBtnXPath, { visible: true, timeout: 10000 })
         } catch (err) {
             console.warn(err)
             console.warn('Subtitles not working, skipping')
