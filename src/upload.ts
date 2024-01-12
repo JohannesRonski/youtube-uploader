@@ -493,13 +493,13 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
         try {
             await page.waitForTimeout(3500)
 
-            await page.waitForSelector('#subtitles-button', { visible: true, timeout: 120000 })
+            await page.waitForSelector('#subtitles-button:not([disabled]', { visible: true, timeout: 120000 })
 
             await page.waitForTimeout(1500)
 
             await page.click('#subtitles-button')
 
-            await page.waitForSelector('#choose-upload-file', { visible: true, timeout: 10000 })
+            await page.waitForSelector('#choose-upload-file:not([disabled]', { visible: true, timeout: 10000 })
 
             await page.waitForTimeout(1500)
 
@@ -515,10 +515,10 @@ async function uploadVideo(videoJSON: Video, messageTransport: MessageTransport)
 
             await page.waitForTimeout(1500)
 
-            await page.click("tp-yt-paper-radio-button[name='without-timing']")
+            await page.click("tp-yt-paper-radio-button[name='without-timing']:not([disabled]")
 
             // confirm
-            await page.waitForSelector('#confirm-button', { visible: true, timeout: 10000 })
+            await page.waitForSelector('#confirm-button:not([disabled]', { visible: true, timeout: 10000 })
 
             await page.waitForTimeout(1000)
 
