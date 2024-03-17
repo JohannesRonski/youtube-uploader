@@ -14,8 +14,6 @@ import {
 } from "./types";
 
 const StealthPlugin = require('puppeteer-extra-plugin-stealth')()
-StealthPlugin.enabledEvasions.delete('iframe.contentWindow')
-StealthPlugin.enabledEvasions.delete('navigator.plugins')
 puppeteer.use(StealthPlugin)
 
 const AnonymizeUAPlugin = require('puppeteer-extra-plugin-anonymize-ua')
