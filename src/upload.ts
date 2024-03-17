@@ -18,6 +18,9 @@ StealthPlugin.enabledEvasions.delete('iframe.contentWindow')
 StealthPlugin.enabledEvasions.delete('navigator.plugins')
 puppeteer.use(StealthPlugin)
 
+const AnonymizeUAPlugin = require('puppeteer-extra-plugin-anonymize-ua')
+puppeteer.use(AnonymizeUAPlugin())
+
 const maxTitleLen = 100
 const maxDescLen = 5000
 
