@@ -1454,9 +1454,7 @@ async function changeChannel(channelName: string) {
         // Button not found, continue without failing
     }
 
-    await page.waitForNavigation({
-        waitUntil: 'networkidle0'
-    })
+    await page.waitForNavigation()
 }
 
 function escapeQuotesForXPath(str: string) {
