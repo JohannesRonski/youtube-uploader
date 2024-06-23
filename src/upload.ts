@@ -1450,11 +1450,12 @@ async function changeChannel(channelName: string) {
     try {
         const confirmButton = await page.waitForSelector('#confirm-button button', { timeout: 1000 })
         await confirmButton?.click()
+        await page.waitForNavigation({
+            waitUntil: 'networkidle0'
+        })
     } catch (err) {
         // Button not found, continue without failing
     }
-
-    await page.waitForNavigation()
 }
 
 function escapeQuotesForXPath(str: string) {
